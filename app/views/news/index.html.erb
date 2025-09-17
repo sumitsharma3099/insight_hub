@@ -1,0 +1,206 @@
+<% content_for :title, "INSIGHT HUB - NEWS TERMINAL" %>
+<% content_for :description, Article.global_seo_description %>
+<% content_for :keywords, Article.global_seo_keywords %>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          'mono': ['Share Tech Mono', 'monospace'],
+        },
+        animation: {
+          'blink': 'blink 1s infinite',
+          'flicker': 'flicker 0.15s infinite linear',
+        },
+        keyframes: {
+          blink: {
+            '0%, 50%': { opacity: '1' },
+            '51%, 100%': { opacity: '0' },
+          },
+          flicker: {
+            '0%, 100%': { opacity: '1' },
+            '50%': { opacity: '0.8' },
+          }
+        }
+      }
+    }
+  }
+</script>
+
+<div class="bg-black text-white font-mono text-sm leading-tight min-h-screen">
+  <!-- Terminal Header -->
+  <div class="bg-black border-b border-gray-600 p-4">
+    <div class="max-w-6xl mx-auto">
+      <!-- Terminal Title Bar -->
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center space-x-2">
+          <span class="text-gray-400">></span>
+          <span class="text-white">INSIGHT HUB NEWS TERMINAL v2.0.80</span>
+        </div>
+        <div class="text-gray-400 animate-blink">█</div>
+      </div>
+      
+      <!-- System Status -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+        <div class="border border-gray-600 p-2">
+          <div class="text-gray-400">ARTICLES LOADED:</div>
+          <div class="text-white text-lg"><%= @total_articles %></div>
+        </div>
+        <div class="border border-gray-600 p-2">
+          <div class="text-gray-400">SYSTEM STATUS:</div>
+          <div class="text-gray-300 text-lg">ONLINE</div>
+        </div>
+        <div class="border border-gray-600 p-2">
+          <div class="text-gray-400">LAST UPDATE:</div>
+          <div class="text-white text-lg"><%= Time.current.strftime('%H:%M:%S') %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Main Content -->
+  <main class="p-4">
+    <div class="max-w-6xl mx-auto">
+      <% if @articles.any? %>
+        <!-- Terminal Output Header -->
+        <div class="mb-6">
+          <div class="text-gray-400 mb-2">> LOADING NEWS MATRIX...</div>
+          <div class="text-gray-400 mb-2">> <%= @articles.count %> ARTICLES RETRIEVED</div>
+          <div class="text-gray-400 mb-4">> DISPLAYING RESULTS:</div>
+        </div>
+
+        <!-- Articles in Terminal Style Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <% @articles.each_with_index do |article, index| %>
+            <div class="border border-gray-600 p-4 hover:bg-gray-800 hover:border-gray-400 transition-all duration-200 article-card">
+              <!-- Article Header -->
+              <div class="flex justify-between items-start mb-3">
+                <div class="flex items-center space-x-2">
+                  <span class="text-gray-400 text-xs">[<%= sprintf('%03d', index + 1) %>]</span>
+                </div>
+                <div class="text-xs text-gray-400">
+                  <%= article.published_at&.strftime('%m/%d') %>
+                </div>
+              </div>
+
+              <!-- Article Image -->
+              <div class="mb-3">
+                <% if article.image.present? %>
+                  <div class="border border-gray-600 overflow-hidden">
+                    <img 
+                      src="<%= article.image %>" 
+                      alt="<%= article.title %>" 
+                      class="w-full h-32 object-cover hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                    >
+                  </div>
+                <% else %>
+                  <div class="h-32 border border-gray-600 flex items-center justify-center bg-gray-900">
+                    <span class="text-2xl text-gray-500">[IMG]</span>
+                  </div>
+                <% end %>
+              </div>
+
+              <!-- Article Content -->
+              <div>
+                <h3 class="text-white font-bold mb-2 text-sm hover:text-gray-300 transition-colors line-clamp-3">
+                  <%= article.title %>
+                </h3>
+                
+                <div class="text-xs text-gray-400 mb-3">
+                  <div>SOURCE: <%= article.source %></div>
+                  <div>AUTHOR: <%= article.author %></div>
+                </div>
+                
+                <a 
+                  href="<%= article.url %>" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  class="block w-full bg-white text-black px-3 py-2 text-xs font-bold hover:bg-gray-200 transition-colors text-center"
+                >
+                  [READ MORE]
+                </a>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <!-- Terminal Footer -->
+        <div class="mt-8 border-t border-gray-600 pt-4">
+          <div class="text-gray-400 text-xs">
+            > END OF TRANSMISSION
+          </div>
+          <div class="text-gray-400 text-xs animate-blink">
+            > READY FOR COMMANDS...
+          </div>
+        </div>
+
+      <% else %>
+        <!-- Empty State -->
+        <div class="text-center py-16">
+          <div class="text-6xl mb-4">[ERROR]</div>
+          <div class="text-gray-400 mb-4">> NO DATA RECEIVED</div>
+          <div class="text-gray-400 mb-4">> SYSTEM OFFLINE</div>
+          <div class="text-gray-400 mb-8">> CHECK CONNECTION</div>
+          
+          <button 
+            onclick="fetchNews()" 
+            class="bg-white text-black px-6 py-2 font-bold hover:bg-gray-200 transition-colors"
+          >
+            [INITIALIZE SYSTEM]
+          </button>
+        </div>
+      <% end %>
+    </div>
+  </main>
+
+  <!-- Terminal Footer -->
+  <footer class="bg-black border-t border-gray-600 p-2 mt-8">
+    <div class="max-w-6xl mx-auto text-xs text-gray-400">
+      <div class="flex justify-between items-center">
+        <div>INSIGHT HUB TERMINAL v2.0.80</div>
+        <div class="animate-blink">█</div>
+        <div>ALL SYSTEMS OPERATIONAL</div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+    function fetchNews() {
+      alert('To fetch news, run: FetchTrendingNewsWorker.perform_async in Rails console or start Sidekiq');
+    }
+    
+
+    // Add terminal typing effect
+    function typeWriter(element, text, speed = 50) {
+      let i = 0;
+      element.innerHTML = '';
+      function type() {
+        if (i < text.length) {
+          element.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(type, speed);
+        }
+      }
+      type();
+    }
+
+    // Initialize terminal effects
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add some terminal randomness
+      setInterval(() => {
+        const cursor = document.querySelector('.animate-blink');
+        if (cursor && Math.random() < 0.1) {
+          cursor.style.opacity = '0';
+          setTimeout(() => {
+            cursor.style.opacity = '1';
+          }, 100);
+        }
+      }, 2000);
+    });
+  </script>

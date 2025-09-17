@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || Article.global_seo_title %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="<%= content_for(:description) || Article.global_seo_description %>">
+    <meta name="keywords" content="<%= content_for(:keywords) || Article.global_seo_keywords %>">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="<%= content_for(:og_title) || Article.global_seo_title %>">
+    <meta property="og:description" content="<%= content_for(:og_description) || Article.global_seo_description %>">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Insight Hub">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<%= content_for(:twitter_title) || Article.global_seo_title %>">
+    <meta name="twitter:description" content="<%= content_for(:twitter_description) || Article.global_seo_description %>">
+    
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <%= yield %>
+  </body>
+</html>

@@ -1,0 +1,10 @@
+fetch_trending_news:
+  cron: '0 */8 * * *'   # Runs every 8 hours
+  class: FetchTrendingNewsWorker
+  description: "Fetch trending news from MediaStack API"
+
+# SEO update runs automatically after news fetch, but we can also schedule it independently
+seo_update:
+  cron: '30 */8 * * *'  # Runs 30 minutes after news fetch (every 8 hours)
+  class: SeoUpdateWorker
+  description: "Update SEO content based on latest articles"
