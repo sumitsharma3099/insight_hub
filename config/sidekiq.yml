@@ -3,5 +3,3 @@
   - default
   - news_fetch
 :timeout: 30
-:redis:
-  url: <%= ENV['REDIS_URL'] || 'redis://localhost:6379/0' %>

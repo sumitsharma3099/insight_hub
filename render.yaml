@@ -10,6 +10,8 @@ services:
         sync: false
       - key: RAILS_ENV
         value: production
+      - key: MEDIASTACK_API_KEY
+        value: 266cb18a9dd4981a0f3f2491db8a5240
       - key: DATABASE_URL
         fromDatabase:
           name: insight-hub-db
@@ -31,6 +33,8 @@ services:
         sync: false
       - key: RAILS_ENV
         value: production
+      - key: MEDIASTACK_API_KEY
+        value: 266cb18a9dd4981a0f3f2491db8a5240
       - key: DATABASE_URL
         fromDatabase:
           name: insight-hub-db
