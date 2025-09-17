@@ -1,0 +1,50 @@
+services:
+  - type: web
+    name: insight-hub
+    env: ruby
+    plan: free
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec puma -C config/puma.rb"
+    envVars:
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: RAILS_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: insight-hub-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: insight-hub-redis
+          property: connectionString
+
+  - type: worker
+    name: insight-hub-worker
+    env: ruby
+    plan: free
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec sidekiq -C config/sidekiq.yml"
+    envVars:
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: RAILS_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: insight-hub-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: insight-hub-redis
+          property: connectionString
+
+databases:
+  - name: insight-hub-db
+    plan: free
+
+  - name: insight-hub-redis
+    type: redis
+    plan: free
