@@ -65,7 +65,22 @@
   <!-- Main Content -->
   <main class="p-4">
     <div class="max-w-6xl mx-auto">
-      <% if @articles.any? %>
+      <% if @database_error %>
+        <!-- Database Connection Error -->
+        <div class="text-center py-16">
+          <div class="text-6xl mb-4">[DB_ERROR]</div>
+          <div class="text-gray-400 mb-4">> DATABASE CONNECTION FAILED</div>
+          <div class="text-gray-400 mb-4">> CHECKING CONNECTION...</div>
+          <div class="text-gray-400 mb-8">> RETRYING IN 30 SECONDS...</div>
+          
+          <button 
+            onclick="location.reload()" 
+            class="bg-white text-black px-6 py-2 font-bold hover:bg-gray-200 transition-colors"
+          >
+            [RETRY CONNECTION]
+          </button>
+        </div>
+      <% elsif @articles.any? %>
         <!-- Terminal Output Header -->
         <div class="mb-6">
           <div class="text-gray-400 mb-2">> LOADING NEWS MATRIX...</div>
