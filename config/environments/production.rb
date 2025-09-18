@@ -50,7 +50,7 @@ Rails.application.configure do
   # config.cache_store = :solid_cache_store
 
   # Replace the default in-process and non-durable queuing backend for Active Job.
-  config.active_job.queue_adapter = :sidekiq
+  config.active_job.queue_adapter = :async
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
@@ -87,6 +87,6 @@ Rails.application.configure do
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
   
-  # Configure Sidekiq for production
-  config.active_job.queue_adapter = :sidekiq
+  # Configure async job processing for production (no Redis required)
+  # config.active_job.queue_adapter = :async
 end

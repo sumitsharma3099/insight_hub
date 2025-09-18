@@ -2,8 +2,7 @@ require 'net/http'
 require 'json'
 require 'uri'
 
-class FetchTrendingNewsWorker
-  include Sidekiq::Worker
+class FetchTrendingNewsWorker < ApplicationJob
 
   def perform
     Rails.logger.info "Starting to fetch trending news from MediaStack API..."
@@ -60,7 +59,7 @@ class FetchTrendingNewsWorker
           
           # Trigger SEO update after news are updated
           Rails.logger.info "Triggering SEO update..."
-          SeoUpdateWorker.perform_async
+          SeoUpdateWorker.perform_later
           
         else
           Rails.logger.error "No data received from MediaStack API or invalid response format"

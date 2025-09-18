@@ -70,7 +70,7 @@ gem "tailwindcss-ruby", "~> 4.1"
 
 gem "tailwindcss-rails", "~> 4.3"
 
-# Background job processing
-gem "sidekiq"
-gem "sidekiq-scheduler"
-gem "redis"
+# Background job processing (commented out - using Rails async instead)
+# gem "sidekiq"
+# gem "sidekiq-scheduler"
+# gem "redis"
