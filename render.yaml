@@ -3,8 +3,8 @@ services:
     name: insight-hub
     env: ruby
     plan: free
-    buildCommand: "bundle install && bundle exec rails assets:precompile && bundle exec rails db:migrate"
-    startCommand: "bundle exec puma -C config/puma.rb"
+    buildCommand: "bundle install && bundle exec rails assets:precompile"
+    startCommand: "./bin/render-start.sh"
     envVars:
       - key: RAILS_MASTER_KEY
         sync: false
