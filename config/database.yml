@@ -23,7 +23,12 @@ test:
 
 # Production database configuration for Render
 production:
-  url: <%= ENV['DATABASE_URL'] %>
+  url: postgresql://insight_hub_db_user:hReCMtlYxOA8n6GkT8018K9ben2y8XhO@dpg-d35el9je5dus73e9jfl0-a.oregon-postgres.render.com/insight_hub_db
   adapter: postgresql
+  host: dpg-d35el9je5dus73e9jfl0-a.oregon-postgres.render.com
+  port: 5432
+  database: insight_hub_db
+  username: insight_hub_db_user
+  password: hReCMtlYxOA8n6GkT8018K9ben2y8XhO
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
