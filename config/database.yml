@@ -23,26 +23,7 @@ test:
 
 # Production database configuration for Render
 production:
-  primary:
-    url: <%= ENV['DATABASE_URL'] %>
-    adapter: postgresql
-    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-    timeout: 5000
-  cache:
-    url: <%= ENV['DATABASE_URL'] %>
-    adapter: postgresql
-    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-    timeout: 5000
-    migrations_paths: db/cache_migrate
-  queue:
-    url: <%= ENV['DATABASE_URL'] %>
-    adapter: postgresql
-    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-    timeout: 5000
-    migrations_paths: db/queue_migrate
-  cable:
-    url: <%= ENV['DATABASE_URL'] %>
-    adapter: postgresql
-    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-    timeout: 5000
-    migrations_paths: db/cable_migrate
+  url: <%= ENV['DATABASE_URL'] %>
+  adapter: postgresql
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000

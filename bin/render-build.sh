@@ -1,23 +1,11 @@
 #!/usr/bin/env bash
-# exit on error
+# Exit on error
 set -o errexit
 
-echo "Starting build process..."
-
-# Install dependencies
-echo "Installing dependencies..."
 bundle install
-
-# Precompile assets
-echo "Precompiling assets..."
-bundle exec rails assets:precompile
-
-# Clean assets
-echo "Cleaning assets..."
-bundle exec rails assets:clean
-
-# Run database migrations
-echo "Running database migrations..."
-bundle exec rails db:migrate
-
-echo "Build completed successfully!"
+bin/rails assets:precompile
+bin/rails assets:clean
+# If you have a paid instance type, we recommend moving
+# database migrations like this one from the build command
+# to the pre-deploy command:
+bin/rails db:migrate
