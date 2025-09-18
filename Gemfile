@@ -73,3 +73,4 @@ gem "tailwindcss-rails", "~> 4.3"
 # Background job processing
 gem "sidekiq"
 gem "sidekiq-scheduler"
+gem "redis"

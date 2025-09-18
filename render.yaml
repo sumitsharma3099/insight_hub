@@ -11,6 +11,11 @@ services:
         fromDatabase:
           name: insight-hub-db
           property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: insight-hub-redis
+          property: connectionString
       - key: RAILS_MASTER_KEY
         sync: false # You'll provide this value on Blueprint creation
       - key: WEB_CONCURRENCY
@@ -18,6 +23,31 @@ services:
       - key: MEDIASTACK_API_KEY
         value: 266cb18a9dd4981a0f3f2491db8a5240
 
+  - type: worker
+    name: insight-hub-worker
+    runtime: ruby
+    plan: free
+    buildCommand: './bin/render-build.sh'
+    startCommand: 'bundle exec sidekiq -C config/sidekiq.yml'
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: insight-hub-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: insight-hub-redis
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: MEDIASTACK_API_KEY
+        value: 266cb18a9dd4981a0f3f2491db8a5240
+
 databases:
   - name: insight-hub-db
+    plan: free
+
+  - name: insight-hub-redis
+    type: redis
     plan: free
