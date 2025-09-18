@@ -1,5 +1,4 @@
-class SeoUpdateWorker
-  include Sidekiq::Worker
+class SeoUpdateWorker < ApplicationJob
 
   def perform
     Rails.logger.info "Starting SEO update process..."
