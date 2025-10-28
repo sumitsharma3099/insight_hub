@@ -68,7 +68,7 @@ end
 
 gem "tailwindcss-ruby", "~> 4.1"
 
-gem "tailwindcss-rails", "~> 4.3"
+gem "tailwindcss-rails", "~> 4.4"
 
 # Background job processing (commented out - using Rails async instead)
 # gem "sidekiq"
